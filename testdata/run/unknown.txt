@@ -1,0 +1,7 @@
+-- input --
+foo run -x
+-- output --
+usage: foo run [-p | --port http port]
+flag provided but not defined: -x
+-- status --
+2

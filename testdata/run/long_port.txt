@@ -1,0 +1,5 @@
+-- input --
+foo run --port 8080
+-- output --
+http port is 8080
+-- status --
