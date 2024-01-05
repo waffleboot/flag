@@ -24,62 +24,62 @@ const (
 )
 
 func main() {
-	f := flag.NewFlagSet("", flag.ContinueOnError)
-	f.Usage = func() {
+	rootFS := flag.NewFlagSet("", flag.ContinueOnError)
+	rootFS.Usage = func() {
 		fmt.Println(usage)
 	}
 
-	err := f.Parse(os.Args[1:])
+	err := rootFS.Parse(os.Args[1:])
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)
 	}
 
-	if f.NArg() == 0 {
-		f.Usage()
+	if rootFS.NArg() == 0 {
+		rootFS.Usage()
 		os.Exit(2)
 	}
 
 	var port int
 	var testDuration time.Duration
 
-	f1 := flag.NewFlagSet("run", flag.ContinueOnError)
-	f1.IntVar(&port, "p", 80, "http port")
-	f1.IntVar(&port, "port", 80, "http port")
-	f1.Usage = func() {
+	runFS := flag.NewFlagSet("run", flag.ContinueOnError)
+	runFS.IntVar(&port, "p", 80, "http port")
+	runFS.IntVar(&port, "port", 80, "http port")
+	runFS.Usage = func() {
 		fmt.Println(run)
 	}
 
-	f2 := flag.NewFlagSet("test", flag.ContinueOnError)
-	f2.DurationVar(&testDuration, "t", 1*time.Minute, "test duration")
-	f2.DurationVar(&testDuration, "time", 1*time.Minute, "test duration")
-	f2.Usage = func() {
+	testFS := flag.NewFlagSet("test", flag.ContinueOnError)
+	testFS.DurationVar(&testDuration, "t", 1*time.Minute, "test duration")
+	testFS.DurationVar(&testDuration, "time", 1*time.Minute, "test duration")
+	testFS.Usage = func() {
 		fmt.Println(test)
 	}
 
-	switch cmd := f.Arg(0); cmd {
+	switch cmd := rootFS.Arg(0); cmd {
 	case CMDRUN:
-		err := f1.Parse(f.Args()[1:])
+		err := runFS.Parse(rootFS.Args()[1:])
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(2)
 		}
 		fmt.Println("http port is", port)
 	case CMDTEST:
-		err = f2.Parse(f.Args()[1:])
+		err = testFS.Parse(rootFS.Args()[1:])
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(2)
 		}
 		fmt.Println(testDuration)
 	case CMDHELP:
-		if f.NArg() > 1 {
-			switch cmd = f.Arg(1); cmd {
+		if rootFS.NArg() > 1 {
+			switch cmd = rootFS.Arg(1); cmd {
 			case CMDRUN:
-				f1.Usage()
+				runFS.Usage()
 				os.Exit(0)
 			case CMDTEST:
-				f2.Usage()
+				testFS.Usage()
 				os.Exit(0)
 			default:
 				fmt.Printf(`foo: '%s' is not a foo command. See 'foo --help'.`, cmd)
@@ -88,7 +88,7 @@ func main() {
 			}
 		}
 
-		f.Usage()
+		rootFS.Usage()
 		os.Exit(0)
 	default:
 		fmt.Printf(`foo: '%s' is not a foo command. See 'foo --help'.`, cmd)
