@@ -42,7 +42,7 @@ func main() {
 
 	var runPort int
 
-	runFS := flag.NewFlagSet("run", flag.ContinueOnError)
+	runFS := flag.NewFlagSet(CMDRUN, flag.ContinueOnError)
 	runFS.IntVar(&runPort, "p", 80, "http port")
 	runFS.IntVar(&runPort, "port", 80, "http port")
 	runFS.Usage = func() {
@@ -51,7 +51,7 @@ func main() {
 
 	var testDuration time.Duration
 
-	testFS := flag.NewFlagSet("test", flag.ContinueOnError)
+	testFS := flag.NewFlagSet(CMDTEST, flag.ContinueOnError)
 	testFS.DurationVar(&testDuration, "t", 1*time.Minute, "test duration")
 	testFS.DurationVar(&testDuration, "time", 1*time.Minute, "test duration")
 	testFS.Usage = func() {
