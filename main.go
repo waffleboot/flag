@@ -40,11 +40,11 @@ func main() {
 		os.Exit(2)
 	}
 
-	var port int
+	var runPort int
 
 	runFS := flag.NewFlagSet("run", flag.ContinueOnError)
-	runFS.IntVar(&port, "p", 80, "http port")
-	runFS.IntVar(&port, "port", 80, "http port")
+	runFS.IntVar(&runPort, "p", 80, "http port")
+	runFS.IntVar(&runPort, "port", 80, "http port")
 	runFS.Usage = func() {
 		fmt.Println(run)
 	}
@@ -65,7 +65,7 @@ func main() {
 			fmt.Println(err)
 			os.Exit(2)
 		}
-		fmt.Println("http port is", port)
+		fmt.Println("http port is", runPort)
 	case CMDTEST:
 		err = testFS.Parse(rootFS.Args()[1:])
 		if err != nil {
