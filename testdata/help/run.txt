@@ -2,4 +2,5 @@
 ./foo help run
 -- output --
 usage: foo run [-p | --port http port]
+
 -- status --

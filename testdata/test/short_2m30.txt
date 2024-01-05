@@ -1,6 +1,7 @@
 -- input --
 ./foo test -t 2m30s
 -- output --
-2m30s
+dir is .
+test duration is 2m30s
 -- status --
 0

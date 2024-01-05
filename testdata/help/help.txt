@@ -1,7 +1,7 @@
 -- input --
 ./foo help
 -- output --
-usage: foo [-h | --help] <command> [<args>]
+usage: foo [-h | --help] [ -d <path> | --dir <path> ] <command> [<args>]
 
 These are common foo commands used in various situations:
 

@@ -1,12 +1,13 @@
 -- input --
-foo -x
+./foo -x
 -- output --
-usage: foo [-h | --help] <command> [<args>]
+flag provided but not defined: -x
+usage: foo [-h | --help] [ -d <path> | --dir <path> ] <command> [<args>]
 
 These are common foo commands used in various situations:
 
    run     Run webapp
    test    Test webapp
-flag provided but not defined: -x
+
 -- status --
 2

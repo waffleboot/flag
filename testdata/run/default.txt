@@ -1,5 +1,6 @@
 -- input --
 ./foo run
 -- output --
+dir is .
 http port is 80
 -- status --

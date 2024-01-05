@@ -1,7 +1,8 @@
 -- input --
 ./foo test -x
 -- output --
-usage: foo test [-t | --time duration]
 flag provided but not defined: -x
+usage: foo test [-t | --time duration]
+
 -- status --
 2

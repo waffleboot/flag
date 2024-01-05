@@ -1,5 +1,6 @@
 -- input --
 ./foo test
 -- output --
-1m0s
+dir is .
+test duration is 1m0s
 -- status --
