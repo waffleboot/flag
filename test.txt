@@ -1,1 +1,0 @@
-usage: foo test [-t | --time duration]

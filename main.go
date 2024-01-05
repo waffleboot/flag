@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-//go:embed root_usage.txt
+//go:embed usage/root.txt
 var rootUsage string
 
-//go:embed test.txt
-var test string
+//go:embed usage/run.txt
+var runUsage string
 
-//go:embed run.txt
-var run string
+//go:embed usage/test.txt
+var testUsage string
 
 const (
 	CMDRUN  = "run"
@@ -46,7 +46,7 @@ func main() {
 	runFS.IntVar(&runPort, "p", 80, "http port")
 	runFS.IntVar(&runPort, "port", 80, "http port")
 	runFS.Usage = func() {
-		fmt.Println(run)
+		fmt.Println(runUsage)
 	}
 
 	var testDuration time.Duration
@@ -55,7 +55,7 @@ func main() {
 	testFS.DurationVar(&testDuration, "t", 1*time.Minute, "test duration")
 	testFS.DurationVar(&testDuration, "time", 1*time.Minute, "test duration")
 	testFS.Usage = func() {
-		fmt.Println(test)
+		fmt.Println(testUsage)
 	}
 
 	switch cmd := rootFS.Arg(0); cmd {
