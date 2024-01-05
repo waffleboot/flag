@@ -1,5 +1,5 @@
 -- input --
-foo help test
+./foo help test
 -- output --
 usage: foo test [-t | --time duration]
 -- status --

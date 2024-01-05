@@ -1,5 +1,5 @@
 -- input --
-foo help
+./foo help
 -- output --
 usage: foo [-h | --help] <command> [<args>]
 

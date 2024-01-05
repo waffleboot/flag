@@ -1,5 +1,5 @@
 -- input --
-foo test -x
+./foo test -x
 -- output --
 usage: foo test [-t | --time duration]
 flag provided but not defined: -x

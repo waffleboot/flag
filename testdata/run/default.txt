@@ -1,5 +1,5 @@
 -- input --
-foo run
+./foo run
 -- output --
 http port is 80
 -- status --

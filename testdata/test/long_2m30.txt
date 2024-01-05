@@ -1,5 +1,5 @@
 -- input --
-foo test --time 2m30s
+./foo test --time 2m30s
 -- output --
 2m30s
 -- status --

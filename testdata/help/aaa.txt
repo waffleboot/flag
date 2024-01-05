@@ -1,5 +1,5 @@
 -- input --
-foo help aaa
+./foo help aaa
 -- output --
 foo: 'aaa' is not a foo command. See 'foo --help'.
 -- status --

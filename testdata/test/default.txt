@@ -1,5 +1,5 @@
 -- input --
-foo test
+./foo test
 -- output --
 1m0s
 -- status --
