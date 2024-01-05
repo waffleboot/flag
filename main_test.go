@@ -11,39 +11,51 @@ import (
 
 	"github.com/rogpeppe/go-internal/txtar"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 )
 
-func TestFoo(t *testing.T) {
-	files, err := filepath.Glob("testdata/**/*.txt")
-	assert.NoError(t, err)
+type FooSuite struct {
+	suite.Suite
+}
 
-	for _, file := range files {
+func TestFooSuite(t *testing.T) {
+	suite.Run(t, &FooSuite{})
+}
+
+func (s *FooSuite) TestFoo() {
+	for _, file := range s.testDataFiles() {
 		file := file
-		t.Run(filepath.Base(file), func(t *testing.T) {
+		s.Run(filepath.Base(file), func() {
 
 			a, err := txtar.ParseFile(file)
-			assert.NoError(t, err)
-			assert.Len(t, a.Files, 3)
-			assert.Equal(t, "input", a.Files[0].Name)
-			assert.Equal(t, "output", a.Files[1].Name)
-			assert.Equal(t, "status", a.Files[2].Name)
+			s.NoError(err)
+			s.Len(a.Files, 3)
+			s.Equal("input", a.Files[0].Name)
+			s.Equal("output", a.Files[1].Name)
+			s.Equal("status", a.Files[2].Name)
 
 			cmdLine := strings.Fields(string(a.Files[0].Data))
-			assert.True(t, len(cmdLine) > 0)
+			s.True(len(cmdLine) > 0)
 
 			output, err := exec.CommandContext(context.Background(), "./foo", cmdLine[1:]...).Output()
-			assert.Equal(t, string(a.Files[1].Data), string(output))
+			s.Equal(string(a.Files[1].Data), string(output))
 			if err != nil {
 				var errExit *exec.ExitError
 				if errors.As(err, &errExit) {
 					var exp int
 					_, err := fmt.Sscanf(string(a.Files[2].Data), "%d", &exp)
-					assert.NoError(t, err)
-					assert.Equal(t, exp, errExit.ExitCode())
+					s.NoError(err)
+					s.Equal(exp, errExit.ExitCode())
 					return
 				}
 			}
 		})
 	}
 
+}
+
+func (s *FooSuite) testDataFiles() []string {
+	files, err := filepath.Glob("testdata/**/*.txt")
+	assert.NoError(s.T(), err)
+	return files
 }
