@@ -7,4 +7,5 @@ These are common foo commands used in various situations:
 
    run     Run webapp
    test    Test webapp
+
 -- status --

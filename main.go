@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-//go:embed usage.txt
-var usage string
+//go:embed root_usage.txt
+var rootUsage string
 
 //go:embed test.txt
 var test string
@@ -26,7 +26,7 @@ const (
 func main() {
 	rootFS := flag.NewFlagSet("", flag.ContinueOnError)
 	rootFS.Usage = func() {
-		fmt.Println(usage)
+		fmt.Println(rootUsage)
 	}
 
 	err := rootFS.Parse(os.Args[1:])

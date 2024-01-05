@@ -26,6 +26,8 @@ func (s *FooSuite) TestFoo() {
 	for _, file := range s.testDataFiles() {
 		file := file
 		s.Run(filepath.Base(file), func() {
+			s.T().Log(file)
+
 			cmdLine, output, status := s.parseTestData(file)
 
 			result, err := exec.CommandContext(context.Background(), cmdLine[0], cmdLine[1:]...).Output()
