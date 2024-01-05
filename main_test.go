@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/fs"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -26,9 +27,10 @@ func (s *FooSuite) TestFoo() {
 	for _, file := range s.testDataFiles() {
 		file := file
 		s.Run(filepath.Base(file), func() {
-			s.T().Log(file)
-
 			cmdLine, output, status := s.parseTestData(file)
+
+			s.T().Log(file)
+			s.T().Log(cmdLine)
 
 			result, err := exec.CommandContext(context.Background(), cmdLine[0], cmdLine[1:]...).Output()
 			s.Equal(output, string(result))
@@ -44,11 +46,10 @@ func (s *FooSuite) TestFoo() {
 			}
 		})
 	}
-
 }
 
 func (s *FooSuite) testDataFiles() []string {
-	files, err := filepath.Glob("testdata/**/*.txt")
+	files, err := glob("testdata", ".txt")
 	assert.NoError(s.T(), err)
 	return files
 }
@@ -65,4 +66,22 @@ func (s *FooSuite) parseTestData(file string) (cmdLine []string, output, status 
 	s.True(len(cmdLine) > 0)
 
 	return cmdLine, string(a.Files[1].Data), string(a.Files[2].Data)
+}
+
+func glob(dir, ext string) ([]string, error) {
+	var files []string
+	err := filepath.Walk(dir, func(path string, info fs.FileInfo, err error) error {
+		if filepath.Ext(path) == ext {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files, err
+}
+
+func TestGlob(t *testing.T) {
+	files, err := glob("testdata", ".txt")
+	assert.NoError(t, err)
+	assert.Contains(t, files, "testdata/foo.txt")
+	assert.Contains(t, files, "testdata/help/help.txt")
 }
