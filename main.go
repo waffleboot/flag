@@ -17,6 +17,12 @@ var test string
 //go:embed run.txt
 var run string
 
+const (
+	CMDRUN  = "run"
+	CMDTEST = "test"
+	CMDHELP = "help"
+)
+
 func main() {
 	f := flag.NewFlagSet("", flag.ContinueOnError)
 	f.Usage = func() {
@@ -52,27 +58,27 @@ func main() {
 	}
 
 	switch cmd := f.Arg(0); cmd {
-	case "run":
+	case CMDRUN:
 		err := f1.Parse(f.Args()[1:])
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(2)
 		}
 		fmt.Println("http port is", port)
-	case "test":
+	case CMDTEST:
 		err = f2.Parse(f.Args()[1:])
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(2)
 		}
 		fmt.Println(testDuration)
-	case "help":
+	case CMDHELP:
 		if f.NArg() > 1 {
 			switch cmd = f.Arg(1); cmd {
-			case "run":
+			case CMDRUN:
 				f1.Usage()
 				os.Exit(0)
-			case "test":
+			case CMDTEST:
 				f2.Usage()
 				os.Exit(0)
 			default:
